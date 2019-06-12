@@ -15,13 +15,29 @@ var winningScore = 100;
 // add collectable items to the game
 function addItems() {
   items = game.add.physicsGroup();
-  createItem(375, 300, 'coin');
+  createItem(225, 500, 'coin');
+  createItem(375, 400, 'coin');
+  createItem(575, 500, 'coin');
+  createItem(460, 300, 'coin');
+  createItem(600, 250, 'coin');
+  createItem(100, 250, 'coin');
+  createItem(225, 200, 'coin');
+  createItem(575, 150, 'coin');
+  createItem(375, 100, 'coin');
 }
 
 // add platforms to the game
 function addPlatforms() {
   platforms = game.add.physicsGroup();
-  platforms.create(450, 150, 'platform');
+  platforms.create(450, 550, 'platform');
+  platforms.create(100, 550, 'platform');
+  platforms.create(300, 450, 'platform');
+  platforms.create(400, 350, 'platform');
+  platforms.create(50, 300, 'platform');
+  platforms.create(525, 300, 'platform');
+  platforms.create(150, 250, 'platform');
+  platforms.create(500, 200, 'platform');
+  platforms.create(300, 150, 'platform');
   platforms.setAll('body.immovable', true);
 }
 
@@ -45,7 +61,7 @@ function itemHandler(player, item) {
   item.kill();
   currentScore = currentScore + 10;
   if (currentScore === winningScore) {
-      createBadge();
+    createBadge();
   }
 }
 
@@ -57,15 +73,20 @@ function badgeHandler(player, badge) {
 
 // setup game when the web page loads
 window.onload = function () {
-  game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update, render: render });
-  
+  game = new Phaser.Game(800, 600, Phaser.AUTO, '', {
+    preload: preload,
+    create: create,
+    update: update,
+    render: render
+  });
+
   // before the game begins
   function preload() {
     game.stage.backgroundColor = '#5db1ad';
-    
+
     //Load images
     game.load.image('platform', 'platform_1.png');
-    
+
     //Load spritesheets
     game.load.spritesheet('player', 'chalkers.png', 48, 62);
     game.load.spritesheet('coin', 'coin.png', 36, 44);
@@ -86,8 +107,14 @@ window.onload = function () {
 
     cursors = game.input.keyboard.createCursorKeys();
     jumpButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-    text = game.add.text(16, 16, "SCORE: " + currentScore, { font: "bold 24px Arial", fill: "white" });
-    winningMessage = game.add.text(game.world.centerX, 275, "", { font: "bold 48px Arial", fill: "white" });
+    text = game.add.text(16, 16, "SCORE: " + currentScore, {
+      font: "bold 24px Arial",
+      fill: "white"
+    });
+    winningMessage = game.add.text(game.world.centerX, 275, "", {
+      font: "bold 48px Arial",
+      fill: "white"
+    });
     winningMessage.anchor.setTo(0.5, 1);
   }
 
@@ -103,7 +130,7 @@ window.onload = function () {
     if (cursors.left.isDown) {
       player.animations.play('walk', 10, true);
       player.body.velocity.x = -300;
-      player.scale.x = - 1;
+      player.scale.x = -1;
     }
     // is the right cursor key pressed?
     else if (cursors.right.isDown) {
@@ -115,7 +142,7 @@ window.onload = function () {
     else {
       player.animations.stop();
     }
-    
+
     if (jumpButton.isDown && (player.body.onFloor() || player.body.touching.down)) {
       player.body.velocity.y = -400;
     }
